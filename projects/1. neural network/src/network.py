@@ -37,6 +37,13 @@ class Network(object):
         errs = []
         for epoch in range(epochs):
             err = 0
+
+            # Create batch
+            if batch_size:
+                batch = np.random.choice(X.shape[0], size = batch_size)
+                X = X[batch, :]
+                y = y[batch, :]
+
             for x, _y in zip(X, y):
                 # Forward Propagation
                 output = x
@@ -54,7 +61,7 @@ class Network(object):
             # calculate average error on all samples
             if verbose:
                 errs.append(err / len(X))
-                print(f"Epoch {epoch + 1}/{epochs}\tError: {errs[-1]}")
+                print(f"Epoch {epoch + 1}/{epochs}\tLoss: {errs[-1]}")
         return errs
 
 
